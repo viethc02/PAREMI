@@ -308,7 +308,7 @@ std::vector<ThreatsObject*> MakeThreadList()
     for (int i = 0 ; i < 16 ; i++)
     {
         ThreatsObject* p_threat = (threat_objs + i);
-        if (p_threat != NULL && i != 4)
+        if (p_threat != NULL && i != 4 && i != 6)
         {
             p_threat->LoadIMG("img//toppo.png", g_screen);
             p_threat->set_type_move(ThreatsObject::STATIC_THREAT);
@@ -333,7 +333,7 @@ std::vector<ThreatsObject2*> Make_Threats2_List()
     for (int i = 0 ; i < 10 ; i++)
     {
         ThreatsObject2* p_threat2 = (threat_objs2 + i);
-        if (p_threat2 != NULL)
+        if (p_threat2 != NULL && i != 8)
         {
             p_threat2->LoadIMG("img//gokurosehit.png", g_screen);
             p_threat2->set_clips();
@@ -759,7 +759,11 @@ void ShowTimeGame(bool &is_quit, TextObject &time_game, UINT &mark_val, TextObje
         if (MessageBox(NULL, ("Game Over"), ("Info"), MB_OK | MB_ICONSTOP) == IDOK)
         {
             is_quit = true;
-            exit(0);
+            g_gamewon.RenderGameOver(g_screen);
+            SDL_Delay(1000);
+            close();
+            SDL_Quit();
+            exit(0) ;
         }
     }
     else
@@ -796,7 +800,7 @@ void HandleBoss(BossObject &boss_object,
                 std::vector<ThreatsObject*> threats_list)
 {
     boss_object.SetMapXY(map_data.start_x_, map_data.start_y_);
-    boss_object.DoPlayer(map_data);
+    boss_object.DoPlayer(map_data,Boss_blood);
     boss_object.MakeBullet(g_screen, SCREEN_WIDTH, SCREEN_HEIGHT);
     boss_object.Show(g_screen,Boss_blood);
 

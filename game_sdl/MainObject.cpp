@@ -250,13 +250,13 @@ void MainObject::DoPlayer(Map& map_data , SDL_Renderer* screen)
     if (come_back_time_ == 0)
     {
         x_val_ = 0;
-        y_val_ += GRAVITY_SPEED;
+        y_val_ += GRAVITY_SPEED; // tang toc do roi
 
         if (y_val_ >= MAX_FALL_SPEED)
         {
-            y_val_ = MAX_FALL_SPEED;
+            y_val_ = MAX_FALL_SPEED; // tang toi moc co dinh
         }
-
+         // di chuyen trai phai
         if (input_type_.left_ == 1)
         {
             x_val_ -= PLAYER_SPEED;
@@ -266,7 +266,7 @@ void MainObject::DoPlayer(Map& map_data , SDL_Renderer* screen)
             x_val_ += PLAYER_SPEED;
         }
 
-
+        // nhay
         if (input_type_.jump_ == 1)
         {
             if (on_ground == true)
@@ -304,18 +304,19 @@ void MainObject::DoPlayer(Map& map_data , SDL_Renderer* screen)
 
 void MainObject::CenterEntityOnMap(Map& map_data)
 {
-    map_data.start_x_ = x_pos_ - (SCREEN_WIDTH / 2);
+    // di chuyen man hinh theo nhan vat
+    map_data.start_x_ = x_pos_ - (SCREEN_WIDTH / 2); // nhan vat di chuyen 1 nua ban do
 
-    if (map_data.start_x_ < 0)
+    if (map_data.start_x_ < 0) // ban do lui` qua gioi han
     {
         map_data.start_x_ = 0;
     }
-    else if (map_data.start_x_ + SCREEN_WIDTH >= map_data.max_x_)
+    else if (map_data.start_x_ + SCREEN_WIDTH >= map_data.max_x_) // ban do di qua gioi han
     {
         map_data.start_x_ = map_data.max_x_ - SCREEN_WIDTH;
     }
 
-    map_data.start_y_ = y_pos_ - (SCREEN_HEIGHT / 2);
+    map_data.start_y_ = y_pos_ - (SCREEN_HEIGHT / 2); // neu ban do di chuyen doc.
     if (map_data.start_y_ < 0)
     {
         map_data.start_y_ = 0;
@@ -341,18 +342,20 @@ void MainObject::CheckToMap(Map& map_data , SDL_Renderer* screen)
     int y2 = 0;
 
     //Check_horizontal
-    int height_min = height_frame_ < TILE_SIZE ? height_frame_ : TILE_SIZE;
 
-    x1 = (x_pos_ + x_val_) / TILE_SIZE;
+    // kiem tra chieu ngang
+    int height_min = height_frame_ < TILE_SIZE ? height_frame_ : TILE_SIZE; // chieu cao nho nhat
+
+    x1 = (x_pos_ + x_val_) / TILE_SIZE; // vi tri hien tai + vi tri bam di chuyen / 1 o ra o thu bao nhieu
     x2 = (x_pos_ + x_val_ + width_frame_ - 1) / TILE_SIZE;
 
     y1 = (y_pos_)/ TILE_SIZE;
     y2 = (y_pos_ + height_min)/ TILE_SIZE;
 
     /*
-        x1,x1..........x2,y1
+        x1,x1..........x2,y1 + them 1 luong frame
         .
-        .
+        .                       // nhan vat
         .
         .
         x1,y2..........x2,y2
@@ -380,16 +383,16 @@ void MainObject::CheckToMap(Map& map_data , SDL_Renderer* screen)
             }
             else
             {
-                if ( val1 != BLANK_TILE || val2 != BLANK_TILE )
+                if ( val1 != BLANK_TILE || val2 != BLANK_TILE ) // va cham. chuyen vi tri di chuyen = 0
                 {
-                    x_pos_ = x2 * TILE_SIZE;
-                    x_pos_ -= width_frame_ + 1;
+                    x_pos_ = x2 * TILE_SIZE; // dung lai tai vi tri do
+                    x_pos_ -= width_frame_ + 1; // tru di frame nhan vat tra lai vi tri dung duoc.
                     x_val_ = 0;
                 }
             }
 
         }
-        else if (x_val_ < 0)
+        else if (x_val_ < 0) // di chuyen sang trai
         {
             int val1 = map_data.tile[y1][x1];
             int val2 = map_data.tile[y2][x1];
@@ -420,7 +423,7 @@ void MainObject::CheckToMap(Map& map_data , SDL_Renderer* screen)
 
 
     //Check vertical
-
+    // check theo chieu doc nhay? ...
     int width_min = width_frame_ < TILE_SIZE ? width_frame_ : TILE_SIZE;
     x1 = (x_pos_) / TILE_SIZE;
     x2 = (x_pos_ + width_min)/ TILE_SIZE;
@@ -430,7 +433,7 @@ void MainObject::CheckToMap(Map& map_data , SDL_Renderer* screen)
 
     if (x1 >= 0 && x2 < MAX_MAP_X && y1 >= 0 && y2 < MAX_MAP_Y)
     {
-        if (y_val_ > 0)
+        if (y_val_ > 0) // dang roi
         {
             int val1 = map_data.tile[y2][x1];
             int val2 = map_data.tile[y2][x2];
@@ -449,7 +452,7 @@ void MainObject::CheckToMap(Map& map_data , SDL_Renderer* screen)
             }
             else
             {
-                if (map_data.tile[y2][x1] != BLANK_TILE || map_data.tile[y2][x2] != BLANK_TILE)
+                if (map_data.tile[y2][x1] != BLANK_TILE || map_data.tile[y2][x2] != BLANK_TILE)     // dung tren mat dat
                 {
                     y_pos_ = y2 * TILE_SIZE;
                     y_pos_ -= (height_frame_ + 1);
@@ -462,7 +465,7 @@ void MainObject::CheckToMap(Map& map_data , SDL_Renderer* screen)
                 }
             }
         }
-        else if (y_val_ < 0)
+        else if (y_val_ < 0) // dang nhay
         {
             int val1 = map_data.tile[y1][x1];
             int val2 = map_data.tile[y1][x2];
@@ -491,21 +494,21 @@ void MainObject::CheckToMap(Map& map_data , SDL_Renderer* screen)
         }
     }
 
-    x_pos_ += x_val_;
-    y_pos_ += y_val_;
+    x_pos_ += x_val_; // di chuyen
+    y_pos_ += y_val_; // bay nhay
 
-    if (x_pos_ < 0)
+    if (x_pos_ < 0) // lui qua muc sau ban do`
     {
         x_pos_ = 0;
     }
-    else if (x_pos_ + width_frame_ > map_data.max_x_)
+    else if (x_pos_ + width_frame_ > map_data.max_x_) // di qua gioi han ban do
     {
         x_pos_ = map_data.max_x_ - width_frame_ - 1;
     }
 
     if (y_pos_ > map_data.max_y_ )
     {
-        come_back_time_ = 60;
+        come_back_time_ = 60; // thoi gian delay
     }
 }
 

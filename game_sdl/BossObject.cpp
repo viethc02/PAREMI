@@ -99,7 +99,7 @@ void BossObject::Show(SDL_Renderer* des,int Boss_blood)
     }
 }
 
-void BossObject::DoPlayer(Map& gMap)
+void BossObject::DoPlayer(Map& gMap,int Boss_blood)
 {
     if (come_back_time_ == 0)
     {
@@ -119,7 +119,7 @@ void BossObject::DoPlayer(Map& gMap)
             x_val_ += BOSS_SPEED;
         }
 
-        CheckToMap(gMap);
+        CheckToMap(gMap,Boss_blood);
     }
     else if (come_back_time_ > 0)
     {
@@ -147,7 +147,7 @@ void BossObject::InitBoss()
     come_back_time_ = 0;
 }
 
-void BossObject::CheckToMap(Map &map_data)
+void BossObject::CheckToMap(Map &map_data,int Boss_blood)
 {
     int x1 = 0;
     int x2 = 0;
@@ -219,13 +219,24 @@ void BossObject::CheckToMap(Map &map_data)
         {
             int val1 = map_data.tile[y2][x1];
             int val2 = map_data.tile[y2][x2];
-
-            if (( val1 != BLANK_TILE && val1 != STATE_MONEY)|| (val2 != BLANK_TILE && val2 != STATE_MONEY))
+            if (Boss_blood >= 40)
             {
-                y_pos_ = y2 * TILE_SIZE;
-                y_pos_ -= (height_frame_ + 1);
-                y_val_ = 0;
-                on_ground = true;
+                if (( val1 != BLANK_TILE && val1 != STATE_MONEY)|| (val2 != BLANK_TILE && val2 != STATE_MONEY))
+                {
+                    y_pos_ = y2 * TILE_SIZE;
+                    y_pos_ -= (height_frame_ + 1);
+                    y_val_ = 0;
+                    on_ground = true;
+                }
+            }
+            else
+            {
+                if (y_pos_ >= SCREEN_HEIGHT / 2 - 100 || (( val1 != BLANK_TILE && val1 != STATE_MONEY)|| (val2 != BLANK_TILE && val2 != STATE_MONEY)))
+                {
+                    y_pos_ -= (height_frame_ + 10);
+                    y_val_ = 0;
+                    on_ground = true;
+                }
             }
         }
         else if (y_val_ < 0)

@@ -37,8 +37,8 @@ class BossObject : public BaseObject
         int get_width_frame() const { return width_frame_ ;}
         int get_height_frame() const { return height_frame_ ;}
 
-        void DoPlayer(Map& gMap);
-        void CheckToMap(Map& gMap);
+        void DoPlayer(Map& gMap,int Boss_blood);
+        void CheckToMap(Map& gMap,int Boss_blood);
 
         void InitBoss();
 

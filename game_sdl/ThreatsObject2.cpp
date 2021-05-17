@@ -238,6 +238,7 @@ void ThreatsObject2::CheckToMap(Map &map_data)
 
     if (y_pos_ > map_data.max_y_ )
     {
+        x_pos_ -= 80;
         come_back_time_ = 60;
     }
 }

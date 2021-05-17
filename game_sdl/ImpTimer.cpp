@@ -23,7 +23,7 @@ void ImpTimer::start()
     start_tick_ = SDL_GetTicks();
 }
 
-void ImpTimer::stop()
+void ImpTimer::stop() // dung game
 {
     is_paused_ = false;
     is_started_ = false;
@@ -31,10 +31,10 @@ void ImpTimer::stop()
 
 void ImpTimer::paused()
 {
-    if (is_started_ == true && is_paused_ == false )
+    if (is_started_ == true && is_paused_ == false ) // chua pause
     {
         is_paused_ = true;
-        paused_tick_ = SDL_GetTicks() - start_tick_;
+        paused_tick_ = SDL_GetTicks() - start_tick_; // thoi gian pause game
     }
 }
 
